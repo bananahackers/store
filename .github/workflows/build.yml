@@ -10,6 +10,11 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -18,7 +23,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [20.x]
 
     runs-on: ubuntu-latest
 
@@ -40,18 +45,14 @@ jobs:
       - name: Package static files as artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: github-pages
+          name: store
           path: docs/
 
   deploy:
     needs: build
 
-    permissions:
-      pages: write
-      id-token: write
-
     environment:
-      name: github-pages
+      name: store
       url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
