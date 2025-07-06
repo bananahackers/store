@@ -52,7 +52,7 @@ jobs:
     needs: build
 
     environment:
-      name: github-pages
+      name: store
       url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
