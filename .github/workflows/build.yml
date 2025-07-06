@@ -40,6 +40,7 @@ jobs:
       - name: Package static files as artifacts
         uses: actions/upload-artifact@v4
         with:
+          name: github-pages
           path: docs/
 
   deploy:
