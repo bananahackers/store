@@ -1,5 +1,7 @@
 'use strict';
 
+import dompurify from 'dompurify';
+
 const appDetailsModal = {
   controller: new BulmaModal('#app-details-modal'),
   content: {
@@ -179,7 +181,10 @@ function setAppDetailsModalDetails (appDetails) {
     appDetailsModal.content.descriptionSeparator.classList.add('is-hidden');
   }
 
-  appDetailsModal.content.description.innerText = appDetails.description;
+  appDetailsModal.content.description.innerHTML = dompurify.sanitize(appDetails.description
+    .split(/\n{2,}/)
+    .map(paragraph => `<p>${paragraph.replace(/\n/g, '<br>')}</p>`)
+    .join(''));
 
   appDetailsModal.content.categories.innerText = generateReadableCategories(appDetails.meta.categories)
 
