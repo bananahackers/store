@@ -31,8 +31,5 @@
     "gulp-jsonminify": "^1.1.0",
     "gulp-rename": "^2.0.0",
     "gulp-terser": "^1.4.0"
-  },
-  "dependencies": {
-    "dompurify": "^3.2.6"
   }
 }
