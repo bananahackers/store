@@ -1,7 +1,7 @@
 # webstore
 Web client for BananaHackers Store
 
-![shields.io Last Commit badge](https://img.shields.io/github/last-commit/jkelol111/webstore)
+![shields.io Last Commit badge](https://img.shields.io/github/last-commit/bananahackers/store)
 
 ## Features
 

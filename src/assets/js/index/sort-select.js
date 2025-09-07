@@ -30,11 +30,7 @@ sortSelect.onchange = async (e) => {
       break;
   }
 
-  for (const appCardColumnElement of appCardsColumnElements) {
-    appCardColumnElement.innerHTML = ''
-  }
-
-  appCardColumn = 0
+  appCardContainer.innerHTML = '';
 
   try {
     let appDetails;

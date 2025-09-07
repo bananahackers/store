@@ -15,9 +15,7 @@ async function reloadData () {
 
   categoriesTabsElement.innerHTML = ''
 
-  for (const appCardColumnElement of appCardsColumnElements) {
-    appCardColumnElement.innerHTML = ''
-  }
+  appCardContainer.innerHTML = '';
 
   try {
     await StoreDbAPI.loadDb();

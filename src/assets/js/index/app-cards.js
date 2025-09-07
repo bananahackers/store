@@ -1,16 +1,9 @@
 'use strict';
 
-var appCardColumn = 0;
-
-const appCardsColumnElements = [
-  document.getElementById('app-cards-column-0'),
-  document.getElementById('app-cards-column-1'),
-  document.getElementById('app-cards-column-2')
-];
+const appCardContainer = document.getElementById('app-cards-container')
 
 function addAppCard (appDetails) {
-  appCardsColumnElements[appCardColumn].innerHTML += `
-    <br>
+  appCardContainer.innerHTML += `
     <div id="${appDetails.slug}" class="card">
       <div class="card-content">
         <div class="media">
@@ -46,11 +39,6 @@ function addAppCard (appDetails) {
       </footer>
     </div>
   `;
-
-  appCardColumn++;
-  if (appCardColumn > appCardsColumnElements.length - 1) {
-    appCardColumn = 0
-  }
 }
 
 async function shareApp(shareURL) {
