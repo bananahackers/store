@@ -74,7 +74,7 @@
   "login-failed-blurb": "Próba logowania/rejestracji nie przebiegła pomyślnie. Użyj innych danych albo spróbuj ponownie później.",
   "login-signup": "Login/Rejestracja",
 
-  "terms-alert": "Korzystając z tego serwisu, zgadzasz się na to, aby niektóre zapytania były przekierowywane do cors.bridged.cc oraz na naszą",
+  "terms-alert": "Korzystając z tego serwisu, zgadzasz się na to, aby niektóre zapytania były przekierowywane do cors.ducmbui.workers.dev oraz na naszą",
   "privacy-policy": "politykę prywatności",
 
   "copy-to-clipboard-success": "Odnośnik został skopiowany do schowka!"

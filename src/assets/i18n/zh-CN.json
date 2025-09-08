@@ -74,7 +74,7 @@
   "login-failed-blurb": "尝试登录/注册失败。 请使用不同的凭据重试或稍后重试。",
   "login-signup": "登录/注册",
 
-  "terms-alert": "通过使用该服务，您同意将某些请求重新路由到 cors.bridged.cc 和我们的",
+  "terms-alert": "通过使用该服务，您同意将某些请求重新路由到 cors.ducmbui.workers.dev 和我们的",
   "privacy-policy": "隐私政策和使用条款",
 
   "copy-to-clipboard-success": "可共享链接成功复制到剪贴板！"

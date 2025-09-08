@@ -73,7 +73,7 @@
   "save-login-details": "I-save ang mga detalye sa aking pag-login.",
   "login-failed-blurb": "Ang pag-log in o pag-sign up ay hindi matagumpay. Pakisubukang muli gamit ang ibang mga kredensyal o subukan muli mamaya.",
   "login-signup": "Login/Sign up",
-  "terms-alert": "Sa pamamagitan ng paggamit ng serbisyo, sumasang-ayon ka sa ilang mga request na mai-rerout sa cors.bridged.cc at ang aming",
+  "terms-alert": "Sa pamamagitan ng paggamit ng serbisyo, sumasang-ayon ka sa ilang mga request na mai-rerout sa cors.ducmbui.workers.dev at ang aming",
   "privacy-policy": "Privacy Policy",
 
   "copy-to-clipboard-success": "Nakopya ang shareable link sa clipboard!"

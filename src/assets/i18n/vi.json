@@ -74,7 +74,7 @@
   "login-failed-blurb": "Đã xảy ra lỗi: Có thể bạn đã nhập sai thông tin hoặc bị trùng tên tài khoản. Bạn đã nhập đúng mật khẩu chưa? Kiểm tra lại xem. Nếu bạn vẫn gặp lỗi, hãy chờ một lúc và thử lại sau, vì có lẽ vấn đề nằm ở phía máy chủ :(",
   "login-signup": "Đăng nhập/Đăng ký",
 
-  "terms-alert": "Bằng việc tiếp tục sử dụng dịch vụ, bạn đồng ý với việc một số yêu cầu của bạn sẽ được chuyển đến cors.bridged.cc để xử lý và việc thu thập dữ liệu được trình bày trong",
+  "terms-alert": "Bằng việc tiếp tục sử dụng dịch vụ, bạn đồng ý với việc một số yêu cầu của bạn sẽ được chuyển đến cors.ducmbui.workers.dev để xử lý và việc thu thập dữ liệu được trình bày trong",
   "privacy-policy": "Chính sách về Quyền riêng tư",
 
   "copy-to-clipboard-success": "Đã sao chép đường link ứng dụng vào clipboard."

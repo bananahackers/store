@@ -216,25 +216,64 @@ function setAppDetailsModalDetails (appDetails) {
       }
     });
   } else {
-    appDetailsModal.content.dependencies.innerText = '?'
+    appDetailsModal.content.dependencies.innerText = 'None';
   }
 
   if (appDetails.download.version) {
     appDetailsModal.content.version.innerText = appDetails.download.version
   } else if (appDetails.download.manifest) {
     appDetailsModal.content.version.innerText = "..."
-    fetch(`https://cors.bridged.cc/${appDetails.download.manifest}`).then(async response => {
-      if (response.ok) {
-        const manifest = await response.json();
-        if (manifest.version) {
-          appDetailsModal.content.version.innerText = manifest.version;
-        } else {
-          appDetailsModal.content.version.innerText = "?";
-        }
+    if (appDetails.download.manifest.match(/^https?:\/\/github.com\/\S+\/\S+\/releases\//)) {
+      const repository = appDetails.download.manifest.match(/^https?:\/\/github.com\/(\S+\/\S+)\/releases/)[1] || null;
+      const match = appDetails.download.url.match(/\/releases\/(?:(latest)\/download|download\/([^\/]+))\/[^\/]+$/);
+      const version = match ? (match[1] || match[2] || null) : null;
+      if (repository && version && version === "latest") {
+        fetch(`https://api.github.com/repos/${repository}/releases/latest`).then(async response => {
+          if (response.ok) {
+            const data = await response.json();
+            appDetailsModal.content.version.innerText = data.tag_name || "?";
+          } else {
+            appDetailsModal.content.version.innerText = "?";
+          }
+        }).catch(console.error);
+      } else if (repository && version) {
+        appDetailsModal.content.version.innerText = version;
       } else {
         appDetailsModal.content.version.innerText = "?";
       }
-    }).catch(() => appDetailsModal.content.version.innerText = "?");
+    } else if (appDetails.download.manifest.match(/^https?:\/\/codeberg.org\/\S+\/\S+\/releases\/download\/\S+\//)) {
+        const repository = appDetails.download.manifest.match(/^https?:\/\/codeberg.org\/(\S+\/\S+)\/releases/)[1] || null;
+        const version = appDetails.download.manifest.match(/\/releases\/download\/(\S+)\//)[1] || null;
+        if (repository && version && version === "latest") {
+          fetch(`https://codeberg.org/api/v1/repos/${repository}/releases/latest`).then(async response => {
+            if (response.ok) {
+              const data = await response.json();
+              appDetailsModal.content.version.innerText = data.tag_name || "?";
+            } else {
+              appDetailsModal.content.version.innerText = "?";
+            }
+          }).catch(console.error);
+        } else if (repository && version) {
+          appDetailsModal.content.version.innerText = version;
+        } else {
+          appDetailsModal.content.version.innerText = "?";
+        }
+    } else {
+      fetch(`https://cors.ducmbui.workers.dev/proxy/${appDetails.download.manifest}`, {
+        mode: 'cors',
+      }).then(async response => {
+        if (response.ok) {
+          const manifest = await response.json();
+          if (manifest.version) {
+            appDetailsModal.content.version.innerText = manifest.version;
+          } else {
+            appDetailsModal.content.version.innerText = "?";
+          }
+        } else {
+          appDetailsModal.content.version.innerText = "?";
+        }
+      }).catch(() => appDetailsModal.content.version.innerText = "?");
+    }
   } else {
     appDetailsModal.content.version.innerText = '?'
   }
@@ -268,15 +307,75 @@ function setAppDetailsModalDetails (appDetails) {
   if (appDetails.download.url) {
     appDetailsModal.buttons.download.classList.remove('is-hidden');
     appDetailsModal.content.size.innerText = "...";
-    fetch(`https://cors.bridged.cc/${appDetails.download.url}`, {
-      method: "HEAD"
-    }).then(response => {
-      if (response.ok) {
-        appDetailsModal.content.size.innerText = `${(response.headers.get("content-length") / 1024).toFixed(2)} KB`
+
+    if (appDetails.download.url.match(/^https?:\/\/github.com\/\S+\/?raw=true$/)) {
+      const repository = appDetails.download.url.match(/^https?:\/\/github.com\/([^\/]+\/[^\/]+)\//)[1] || null;
+      fetch(appDetails.download.url.replace(`github.com/${repository}/blob`, `raw.githubusercontent.com/${repository}`)).then(async response => {
+        if (response.ok) {
+          if (response.ok) {
+            appDetailsModal.content.size.innerText = `${(response.headers.get("content-length") / 1024).toFixed(2)} KB`
+          } else {
+            console.error("Failed to fetch file size:", response.statusText);
+            appDetailsModal.content.size.innerText = "?";
+          }
+        } else {
+          appDetailsModal.content.size.innerText = "?";
+        }
+      }).catch(() => appDetailsModal.content.size.innerText = "?");
+    } else if (appDetails.download.url.match(/^https?:\/\/github.com\/\S+\/\S+\/releases\//)) {
+      const repository = appDetails.download.url.match(/^https?:\/\/github.com\/(\S+\/\S+)\/releases/)[1] || null;
+      const match = appDetails.download.url.match(/\/releases\/(?:(latest)\/download|download\/([^\/]+))\/[^\/]+$/);
+      const version = match ? (match[1] || match[2] || null) : null;
+      const file = appDetails.download.url.split('/').pop();
+      if (repository && version && file) {
+        fetch(`https://api.github.com/repos/${repository}/releases/${version === 'latest' ? 'latest' : `tags/${version}`}`)
+            .then(async response => {
+              if (response.ok) {
+                const data = await response.json();
+                const asset = data.assets.find(a => a.name === file);
+                if (asset) {
+                  appDetailsModal.content.size.innerText = `${(asset.size / 1024).toFixed(2)} KB`;
+                }
+              }
+            }).catch(console.error);
       } else {
+        console.error("Failed to parse GitHub URL for size retrieval");
         appDetailsModal.content.size.innerText = "?";
       }
-    }).catch(() => appDetailsModal.content.size.innerText = "?");
+    } else if (appDetails.download.url.match(/^https?:\/\/codeberg.org\/\S+\/\S+\/releases\/download\/\S+\//)) {
+        const repository = appDetails.download.url.match(/^https?:\/\/codeberg.org\/(\S+\/\S+)\/releases/)[1] || null;
+        const version = appDetails.download.url.match(/\/releases\/download\/(\S+)\//)[1] || null;
+        const file = appDetails.download.url.split('/').pop();
+        if (repository && version && file) {
+          fetch(`https://codeberg.org/api/v1/repos/${repository}/releases/${version === 'latest' ? 'latest' : `tags/${version}`}`)
+              .then(async response => {
+                if (response.ok) {
+                  const data = await response.json();
+                  const asset = data.assets.find(a => a.name === file);
+                  if (asset) {
+                    appDetailsModal.content.size.innerText = `${(asset.size / 1024).toFixed(2)} KB`;
+                  }
+                }
+              }).catch(console.error);
+        } else {
+          appDetailsModal.content.size.innerText = "?";
+        }
+    } else {
+      fetch(`https://cors.ducmbui.workers.dev/proxy/${appDetails.download.url}`, {
+        method: "HEAD",
+        mode: "cors",
+      }).then(response => {
+        if (response.ok) {
+          appDetailsModal.content.size.innerText = `${(response.headers.get("content-length") / 1024).toFixed(2)} KB`
+        } else {
+          console.error("Failed to fetch file size:", response.statusText);
+          appDetailsModal.content.size.innerText = "?";
+        }
+      }).catch(() => {
+        console.error("Failed to fetch file size: Network error");
+        appDetailsModal.content.size.innerText = "?";
+      });
+    }
   } else {
     appDetailsModal.buttons.download.classList.add('is-hidden');
   }
