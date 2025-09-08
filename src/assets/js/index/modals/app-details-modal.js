@@ -87,7 +87,7 @@ async function reloadAppRatings (appID) {
                   <p>
                     <strong>@${rating.username}</strong> • <small>${rating.points} ★</small> • <small>${ratingCreationTime}</small>
                   </p>
-                  <p>${rating.description}></p>
+                  <p>${rating.description}</p>
                 </div>
               </div>
             </acticle>
