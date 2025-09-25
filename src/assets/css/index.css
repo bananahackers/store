@@ -54,6 +54,11 @@ main .level {
     margin-top: 1.5em;
 }
 
+.category-tab.is-active a {
+    margin-bottom: -.75em;
+    padding-bottom: 1.25em;
+}
+
 #app-cards-container {
     margin-bottom: 1.5em;
     gap: 1.5em;
@@ -64,7 +69,8 @@ main .level {
         border: none;
     }
 
-    #categories-tabs {
+    #categories-tabs,
+    .card-footer-item {
         font-size: .875em;
     }
 
