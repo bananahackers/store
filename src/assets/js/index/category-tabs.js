@@ -6,9 +6,9 @@ var currentSelectedCategory = 'all';
 const categoriesTabsElement = document.getElementById('categories-tabs');
 
 categoriesTabsElement.onclick = (e) => {
-  const targetElementClasses = e.target.classList
-  if (targetElementClasses.contains('category-tab')) {
-    const clickedCategory = e.target.getAttribute("data-category-id");
+  const tabElement = e.target.closest('.category-tab')
+  if (tabElement) {
+    const clickedCategory = tabElement.getAttribute('data-category-id');
     if (currentSelectedCategory !== clickedCategory) {
       currentSelectedCategory = clickedCategory;
       for (const categoryTabElement of document.querySelectorAll('.category-tab')) {

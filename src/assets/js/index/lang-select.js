@@ -6,6 +6,7 @@ const langSelect = document.getElementById("lang-select");
 langSelect.onchange = async (e) => {
   e.target.disabled = true;
   sortSelect.disabled = true;
+  sortToggleButton.disabled = true;
   reloadButton.disabled = true;
   searchInput.disabled = true;
   searchButton.disabled = true;
@@ -26,8 +27,9 @@ langSelect.onchange = async (e) => {
 
   e.target.disabled = false;
   sortSelect.disabled = false;
+  sortToggleButton.disabled = false;
   reloadButton.disabled = false;
   searchInput.disabled = false;
   searchButton.disabled = false;
-  if (isSearching) exitSearchButton.disabled = false;
+  exitSearchButton.disabled = false;
 }

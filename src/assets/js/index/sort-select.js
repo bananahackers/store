@@ -1,10 +1,27 @@
 'use strict';
 
 const sortSelect = document.getElementById('sort-select');
+const sortToggleButton = document.getElementById('sort-toggle-button');
+const sortPopup = document.getElementById('sort-popup');
+
+sortToggleButton.onclick = () => {
+  if (sortToggleButton.disabled) return
+  const isExpanded = sortToggleButton.getAttribute('aria-expanded') === 'true'
+  sortToggleButton.setAttribute('aria-expanded', (!isExpanded).toString())
+  sortPopup.classList.toggle('is-hidden', isExpanded)
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.store-sort')) {
+    sortToggleButton.setAttribute('aria-expanded', 'false')
+    sortPopup.classList.add('is-hidden')
+  }
+})
 
 // Handle sortSelect onchange.
 sortSelect.onchange = async (e) => {
   sortSelect.disabled = true;
+  sortToggleButton.disabled = true;
   reloadButton.disabled = true;
   langSelect.disabled = true;
   searchInput.disabled = true;
@@ -14,7 +31,7 @@ sortSelect.onchange = async (e) => {
   reloadButton.classList.add('is-loading');
 
   const sortIcon = document.getElementById('sort-icon')
-  sortIcon.classList.remove('fa-sort-alpha-down', 'fa-fire-alt', 'fa-tags', "fa-sort-numeric-down-alt");
+  sortIcon.classList.remove('fa-sort-alpha-down', 'fa-fire-alt', 'fa-tags', 'fa-sort-numeric-down-alt');
   switch (e.target.value) {
     case 'alphabetical':
       sortIcon.classList.add('fa-sort-alpha-down');
@@ -25,8 +42,8 @@ sortSelect.onchange = async (e) => {
     case 'categorical':
       sortIcon.classList.add('fa-tags');
       break;
-    case "ratings":
-      sortIcon.classList.add("fa-sort-numeric-down-alt");
+    case 'ratings':
+      sortIcon.classList.add('fa-sort-numeric-down-alt');
       break;
   }
 
@@ -40,7 +57,7 @@ sortSelect.onchange = async (e) => {
       appDetails = await listAppsByCategory(currentSelectedCategory, e.target.value);
     }
 
-    var len = 0;
+    let len = 0;
     for (const app in appDetails) {
       addAppCard(appDetails[app]);
       len++;
@@ -50,16 +67,17 @@ sortSelect.onchange = async (e) => {
 
     reloadButton.classList.remove('is-loading')
     sortSelect.disabled = false
+    sortToggleButton.disabled = false
     reloadButton.disabled = false
     langSelect.disabled = false;
     searchInput.disabled = false;
     searchButton.disabled = false;
-    if (isSearching) exitSearchButton.disabled = false;
+    exitSearchButton.disabled = false;
 
     try {
       const appSlug = window.location.hash.split('#')[1]
-      if (typeof appSlug !== 'undefined') {
-        document.querySelector(`.app-details[data-app-slug="${appSlug}"]`).click()
+      if (typeof appSlug !== 'undefined' && appSlug.length > 0) {
+        document.querySelector(`.app-entry-open[data-app-slug="${appSlug}"]`).click()
         window.location.hash = appSlug
       } else {
         window.location.hash = ''
@@ -69,7 +87,7 @@ sortSelect.onchange = async (e) => {
       console.error(err);
       bulmaToast.toast({
         message: err,
-        type: "is-danger"
+        type: 'is-danger'
       });
     }
   } catch (err) {
@@ -80,6 +98,7 @@ sortSelect.onchange = async (e) => {
     });
 
     sortSelect.disabled = false;
+    sortToggleButton.disabled = false;
     reloadButton.disabled = false;
     langSelect.disabled = false;
     reloadButton.classList.remove('is-loading');
