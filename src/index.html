@@ -27,191 +27,97 @@
 	<link rel="stylesheet" href="assets/css/index.css" />
 </head>
 <body>
-	<header>
-		<div class="navbar">
-			<div class="navbar-brand">
-				<a class="navbar-item" href="/">
-					<img src="assets/logos/bhackers-store.svg"
-					     alt="BananaHackers Store"
-					     width="28"
-					     height="28" />
-				</a>
-				<div class="navbar-item">
-					<p class="control is-expanded">
-						<span class="select is-fullwidth">
-							<select id="database-select" aria-label="Select database">
-								<option value="BananaHackers">
-									BananaHackers Store
-								</option>
-								<option value="openGiraffes-Store">
-									openGiraffes Store
-								</option>
-							</select>
-						</span>
-					</p>
+	<header class="store-header">
+		<div class="store-header-inner">
+			<a class="store-home-button" href="/" aria-label="Home">
+				<img src="assets/logos/bhackers-store.svg" alt="BananaHackers Store" width="18" height="18" />
+				<span class="store-wordmark">BananaHackers Store</span>
+			</a>
+			<div class="store-header-right">
+				<nav class="store-header-links" aria-label="Top links">
+					<a class="i18n" data-i18n="website" href="https://bananahackers.net" target="_blank">Back to BananaHackers website</a>
+					<a class="i18n" data-i18n="wiki.current" href="https://wiki.bananahackers.net" target="_blank">wiki</a>
+					<a class="i18n" data-i18n="forums" href="https://groups.google.com/g/bananahackers" target="_blank">forums</a>
+					<a href="https://github.com/bananahackers/store" target="_blank">Source code on GitHub</a>
+				</nav>
+				<div class="store-header-actions">
+					<div class="store-lang-select">
+						<span class="icon is-small"><i class="fas fa-globe"></i></span>
+						<select id="lang-select" aria-label="Select language" disabled>
+							<option value="en">English</option>
+							<option value="pl">Polski</option>
+							<option value="tl">Tagalog</option>
+							<option value="vi">Tiếng Việt</option>
+							<option value="zh-CN">中文 (简体)</option>
+						</select>
+					</div>
+					<button id="user-button" class="button is-link" aria-label="Account">
+						<span class="icon"><i id="user-icon" class="fas fa-user"></i></span>
+					</button>
 				</div>
-				<a class="navbar-burger" data-target="webstore-navbar" role="button" aria-label="Menu" aria-expanded="false">
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-				</a>
 			</div>
-			<nav id="webstore-navbar" class="navbar-menu">
-				<div class="navbar-start">
-					<a class="navbar-item is-unselectable i18n" data-i18n="website" href="https://bananahackers.net" target="_blank">
-						Back to BananaHackers website
-					</a>
-					<a class="navbar-item is-unselectable i18n" data-i18n="wiki.current" href="https://wiki.bananahackers.net" target="_blank">
-						wiki
-					</a>
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link is-unselectable i18n" data-i18n="forums">
-							forums
-						</a>
-						<div class="navbar-dropdown is-boxed">
-							<a class="navbar-item is-unselectable i18n" href="https://groups.google.com/g/bananahackers" target="_blank">
-								Google Forums
-							</a>
-							<a class="navbar-item is-unselectable i18n" href="https://www.reddit.com/r/KaiOS" target="_blank">
-								Reddit
-							</a>
-							<a class="navbar-item is-unselectable i18n" href="https://discord.gg/rQ93zEu" target="_blank">
-								Discord
-							</a>
-							<a class="navbar-item is-unselectable i18n" href="https://matrix.to/#/!bHojAVTxOAfeEMLjkS:mozilla.org" target="_blank">
-								Matrix (bridged)
-							</a>
-						</div>
-					</div>
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link is-unselectable i18n" data-i18n="app-databases">
-							app-databases
-						</a>
-						<div class="navbar-dropdown is-boxed">
-							<a class="navbar-item is-unselectable i18n" href="https://gitlab.com/banana-hackers/store-db" target="_blank">
-								GitLab
-							</a>
-							<a class="navbar-item is-unselectable i18n" href="https://github.com/bananahackers/store-db" target="_blank">
-								GitHub (mirror)
-							</a>
-						</div>
-					</div>
-					<a class="navbar-item is-unselectable" href="https://github.com/bananahackers/store" target="_blank">
-						Source code on GitHub
-					</a>
-				</div>
-				<div class="navbar-end">
-					<div class="navbar-item">
-						<div class="field is-grouped">
-							<p class="control has-icons-left is-expanded">
-								<span class="icon is-small is-left">
-									<i class="fas fa-globe"></i>
-								</span>
-								<span class="select is-fullwidth">
-									<select id="lang-select" aria-label="Select language" disabled>
-										<option value="en">
-											English
-										</option>
-										<option value="pl">
-											Polski
-										</option>
-										<option value="tl">
-											Tagalog
-										</option>
-										<option value="vi">
-											Tiếng Việt
-										</option>
-										<option value="zh-CN">
-											中文 (简体)
-										</option>
-									</select>
-								</span>
-							</p>
-							<div class="control">
-								<button id="user-button" class="button is-link">
-									<span class="icon">
-										<i id="user-icon" class="fas fa-user"></i>
-									</span>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</nav>
-		</div>
-		<div id="categories-tabs-container" class="tabs is-boxed">
-			<ul id="categories-tabs"></ul>
 		</div>
 	</header>
-	<main>
-		<div class="level">
-			<div class="level-left">
-				<div class="level-item">
-					<div class="control is-expanded has-icons-left">
-						<span class="icon is-small is-left">
-							<i id="sort-icon" class="fas fa-sort-alpha-down"></i>
-						</span>
+	<main class="store-main">
+		<section class="store-branding">
+			<div class="store-branding-title">
+				<img src="assets/logos/bhackers-store.svg" alt="BananaHackers Store" width="36" height="36" />
+				<h1>BananaHackers Store</h1>
+			</div>
+			<div class="store-branding-db-select">
+				<label for="database-select">Database</label>
+				<div class="select is-fullwidth">
+					<select id="database-select" aria-label="Select database">
+						<option value="BananaHackers">BananaHackers Store</option>
+						<option value="openGiraffes-Store">openGiraffes Store</option>
+					</select>
+				</div>
+			</div>
+		</section>
+
+		<section class="store-toolbar">
+			<div id="categories-tabs-container" class="store-categories-tabs">
+				<ul id="categories-tabs"></ul>
+			</div>
+			<div class="store-toolbar-actions">
+				<div class="store-total-apps">
+					<span id="data-total-apps-label">0</span>
+					<span class="i18n" data-i18n="apps">apps</span>
+				</div>
+				<div class="store-sort">
+					<button id="sort-toggle-button" class="button" type="button" aria-expanded="false" aria-controls="sort-popup">
+						<span class="icon is-small"><i id="sort-icon" class="fas fa-sort-alpha-down"></i></span>
+						<span>Sort</span>
+					</button>
+					<div id="sort-popup" class="store-popup is-hidden">
 						<div class="select is-fullwidth">
 							<select id="sort-select" aria-label="Sort option" disabled>
-								<option class="i18n" value="alphabetical" data-i18n="alphabetical">
-									alphabetical
-								</option>
-								<option class="i18n" value="popularity" data-i18n="popularity">
-									popularity
-								</option>
-								<option class="i18n" value="categorical" data-i18n="categorical">
-									categorical
-								</option>
-								<option class="i18n" value="ratings" data-i18n="ratings">
-									ratings
-								</option>
+								<option class="i18n" value="alphabetical" data-i18n="alphabetical">alphabetical</option>
+								<option class="i18n" value="popularity" data-i18n="popularity">popularity</option>
+								<option class="i18n" value="categorical" data-i18n="categorical">categorical</option>
+								<option class="i18n" value="ratings" data-i18n="ratings">ratings</option>
 							</select>
 						</div>
 					</div>
 				</div>
-				<div class="level-item">
-					<div class="control">
-						<button id="reload-button" class="button is-primary is-loading" disabled>
-							<span class="icon is-small">
-								<i class="fas fa-sync-alt"></i>
-							</span>
+				<div id="search-control" class="store-search">
+					<button id="search-button" class="button is-primary" aria-label="Search" disabled type="button">
+						<span class="icon is-small"><i class="fas fa-search"></i></span>
+					</button>
+					<div id="search-panel" class="store-search-panel is-hidden">
+						<input id="search-input" class="input" type="text" placeholder="Search" aria-label="Search" disabled />
+						<button id="exit-search-button" class="button is-danger" aria-label="Clear search" disabled type="button">
+							<span class="icon is-small"><i class="fas fa-times"></i></span>
 						</button>
 					</div>
 				</div>
+				<button id="reload-button" class="button is-primary is-loading" disabled>
+					<span class="icon is-small"><i class="fas fa-sync-alt"></i></span>
+				</button>
 			</div>
-			<div class="level-right">
-				<div class="level-item">
-					<p class="subtitle is-6">
-						<span id="data-total-apps-label">0</span>
-						<span class="i18n" data-i18n="apps">
-							apps
-						</span>
-					</p>
-				</div>
-				<div class="level-item">
-					<div class="field has-addons">
-						<p class="control">
-							<input id="search-input" class="input" type="text" placeholder="Search" aria-label="Search" disabled />
-						</p>
-						<p class="control">
-							<button id="search-button" class="button is-primary" aria-label="Search" disabled>
-								<span class="icon is-small">
-									<i class="fas fa-search"></i>
-								</span>
-							</button>
-						</p>
-						<p class="control">
-							<button id="exit-search-button" class="button is-danger" aria-label="Clear search" disabled>
-								<span class="icon is-small">
-									<i class="fas fa-times"></i>
-								</span>
-							</button>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="app-cards-container">
+		</section>
+
+		<div id="app-cards-container" class="store-app-list">
 			<!-- App cards will be dynamically inserted here -->
 		</div>
 	</main>
